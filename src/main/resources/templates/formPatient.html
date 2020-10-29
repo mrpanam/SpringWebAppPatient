@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctolib</title>
+
+</head>
+<body>
+<div layout:fragment="contenu1">
+    <div class="container col-6 mt-4">
+        <section class="card">
+            <div class="card-header" th:if="${mode=='new'}">Formulaire nouveau patient</div>
+            <div class="card-header" th:if="${mode=='edit'}">Formulaire de mise à jour</div>
+            <div class="card-body">
+
+                <form th:action="@{savePatient}" method="post">
+                    <div class="form-group ">
+                        <label>ID:</label><label th:text="${patient.id}"></label>
+                        <!--champ fait pour envoyer l'id lors d'un update et pas insert-->
+                        <input type="hidden" name="id" class="form-control" th:value="${patient.id}">
+
+                    </div>
+                    <div class="form-group ">
+                        <label>Nom:</label>
+                        <input type="text" name="nom" class="form-control" th:value="${patient.nom}" required
+                               minlength="3" maxlength="15">
+                        <span th:errors="${patient.nom}"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label>Prenom:</label>
+                        <input type="text" name="prenom" class="form-control" th:value="${patient.prenom}" required
+                               minlength="3" maxlength="15">
+                        <span th:errors="${patient.prenom}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de Naissance:</label>
+                        <input type="date" name="dateNaissance" class="form-control"
+                               th:value="${patient.dateNaissance}">
+                        <span></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Departement</label>
+                        <input type="number" name="dept" class="form-control" th:value="${patient.dept}" min="1"
+                               max="99">
+                        <span></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Malade:</label>
+                        <input type="checkbox" name="malade" th:checked="${patient.malade}">
+                        <span></span>
+                    </div>
+                    <button class="btn btn-success" type="submit">Enregistrer</button>
+                </form>
+            </div>
+
+        </section>
+    </div>
+</div>
+</body>
+</html>
